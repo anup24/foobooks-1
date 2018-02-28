@@ -2,6 +2,8 @@
 
 return [
 
+    'supportEmail' => 'help@foobooks.dwa15.me',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
