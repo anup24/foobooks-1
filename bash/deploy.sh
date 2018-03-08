@@ -34,13 +34,15 @@ welcome () {
         1)
             info "Enter a commit message: "
             read -${BASH_VERSION+e}r msg
+            line
             git add --all
             git commit -m "$msg"
             git push origin master
-            ssh $usernameServer "$docRoot/bash/deploy.sh"
+            line
+            ssh -t $usernameServer "$docRoot/bash/deploy.sh"
             ;;
         2)
-            ssh $usernameServer "$docRoot/bash/deploy.sh"
+            ssh -t $usernameServer "$docRoot/bash/deploy.sh"
             ;;
         3)
             info "Ok, goodbye!";
@@ -48,27 +50,6 @@ welcome () {
             ;;
         *)
             echo "Unknown command";
-            ;;
-    esac
-
-    info "Git status on server for $docRoot:"
-    line
-    ssh $usernameServer "cd $docRoot; git status"
-    line
-    info "Do you want to continue with deployment? (y/n)"
-
-    read -${BASH_VERSION+e}r choice
-
-    case $choice in
-        y)
-            ssh $usernameServer "$docRoot/bash/deploy.sh"
-            ;;
-        n)
-            info "Ok, goodbye!";
-            exit
-            ;;
-        *)
-            info "Unknown command";
             ;;
     esac
 }
@@ -83,7 +64,9 @@ deploy () {
     git pull origin master
     line
     info 'composer install --no-dev:'
+    line
     composer install --no-dev
+    line
 }
 
 
