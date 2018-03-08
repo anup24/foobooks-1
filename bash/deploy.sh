@@ -9,7 +9,7 @@ usernameServer="root@104.236.208.248"
 
 # Helper output functions
 line () {
-    echo "--------------------------------------"
+    info "--------------------------------------"
 }
 
 info () {
@@ -19,8 +19,7 @@ info () {
 
 # Function to handle git actions locally
 welcome () {
-    info "Running git status:"
-    lineho
+    info "Running git status -------------------"
     git status
     line
     info "How would you like to proceed?"
@@ -59,12 +58,10 @@ welcome () {
 # This function is invoked when this script is invoked on your server
 deploy () {
     cd $docRoot;
-    info 'git pull origin master:'
-    line
+    info 'git pull origin master ---------------'
     git pull origin master
     line
-    info 'composer install --no-dev:'
-    line
+    info 'composer install --no-dev ------------'
     composer install --no-dev
     line
 }
