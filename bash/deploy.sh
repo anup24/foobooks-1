@@ -9,7 +9,7 @@ usernameServer="root@104.236.208.248"
 
 # Helper output functions
 line () {
-    info "--------------------------------------"
+    echo "--------------------------------------"
 }
 
 info () {
@@ -20,7 +20,7 @@ info () {
 # Function to handle git actions locally
 welcome () {
     info "Running git status:"
-    line
+    lineho
     git status
     line
     info "How would you like to proceed?"
