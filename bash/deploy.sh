@@ -51,8 +51,8 @@ welcome () {
             ;;
     esac
 
-    line
     info "Git status on server for $docRoot:"
+    line
     ssh $usernameServer "cd $docRoot; git status"
     line
     info "Do you want to continue with deployment? (y/n)"
