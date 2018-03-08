@@ -4,7 +4,7 @@
 # Customize the following for your project/server
 #
 docRoot="/var/www/html/foobooks"
-usernameServer="root@server.ip.address"
+usernameServer="root@104.236.208.248"
 
 
 # Helper output functions
@@ -78,8 +78,8 @@ welcome () {
 # This function is invoked when this script is invoked on your server
 deploy () {
     cd $docRoot;
-    line
     info 'git pull origin master:'
+    line
     git pull origin master
     line
     info 'composer install --no-dev:'
