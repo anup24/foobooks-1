@@ -19,10 +19,10 @@ info () {
 
 # Function to handle git actions locally
 welcome () {
-    info "Running git status -------------------"
+    info "\nRunning git status -------------------"
     git status
     line
-    info "How would you like to proceed?"
+    info "\nHow would you like to proceed?"
     info " (1) Push and deploy any pending commits."
     info " (2) Stage and commit all changed files, then push and deploy any pending commits."
     info " (3) Exit"
@@ -58,10 +58,10 @@ welcome () {
 # This function is invoked when this script is invoked on your server
 deploy () {
     cd $docRoot;
-    info 'git pull origin master ---------------'
+    info "\ngit pull origin master ---------------"
     git pull origin master
     line
-    info 'composer install --no-dev ------------'
+    info "\ncomposer install --no-dev ------------"
     composer install --no-dev
     line
 }
