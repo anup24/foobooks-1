@@ -24,14 +24,17 @@ welcome () {
     git status
     line
     info "How would you like to proceed?"
-    info " (1) Stage and commit all changed files, then push and deploy."
-    info " (2) Push and deploy any pending commits."
+    info " (1) Push and deploy any pending commits."
+    info " (2) Stage and commit all changed files, then push and deploy any pending commits."
     info " (3) Exit"
     info "Enter your choice: "
     read -${BASH_VERSION+e}r choice
 
      case $choice in
         1)
+            ssh -t $usernameServer "$docRoot/bash/deploy.sh"
+            ;;
+        2)
             info "Enter a commit message: "
             read -${BASH_VERSION+e}r msg
             line
@@ -39,9 +42,6 @@ welcome () {
             git commit -m "$msg"
             git push origin master
             line
-            ssh -t $usernameServer "$docRoot/bash/deploy.sh"
-            ;;
-        2)
             ssh -t $usernameServer "$docRoot/bash/deploy.sh"
             ;;
         3)
