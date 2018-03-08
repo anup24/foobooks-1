@@ -69,11 +69,11 @@ deploy () {
 
 # If this script is run on the server (docRoot exists), it should deploy
 if [ -d "$docRoot" ]; then
-    info 'Detected location: Server - Running deployment.'
+    info "Detected location: server - running deployment"
     deploy
 # Otherwise, if this script is run locally,
 # it should invoke `welcome` to determine whether to deploy
 else
-    info 'Detected location: Local'
+    info "Detected location: local"
     welcome
 fi
