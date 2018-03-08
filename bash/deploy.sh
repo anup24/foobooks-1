@@ -7,26 +7,13 @@ docRoot="/var/www/html/foobooks"
 usernameServer="root@server.ip.address"
 
 
-# Helper function to output a line separator
+# Helper functions
 line () {
     echo "--------------------------------------"
 }
 
-cecho() {
-  local code="\033["
-  case "$1" in
-    black  | bk) color="${code}0;30m";;
-    red    |  r) color="${code}1;31m";;
-    green  |  g) color="${code}1;32m";;
-    yellow |  y) color="${code}1;33m";;
-    blue   |  b) color="${code}1;34m";;
-    purple |  p) color="${code}1;35m";;
-    cyan   |  c) color="${code}1;36m";;
-    gray   | gr) color="${code}0;37m";;
-    *) local text="$1"
-  esac
-  [ -z "$text" ] && local text="$color$2${code}0m"
-  echo "$text"
+info () {
+    echo $(tput bold)$(tput setaf 4)$@ $(tput sgr 0)
 }
 
 
@@ -34,18 +21,19 @@ cecho() {
 # Function to show a `git status` on server and prompts for whether to deploy or not
 # This function is invoked when this script is run on your local machine.
 welcome () {
-    cecho b "Running git status:"
+    info "Running git status:"
     git status
-    cecho b "\nHow would you like to proceed?"
-    cecho b "    (1) Stage and commit all changed files, then push and deploy."
-    cecho b "    (2) Push and deploy any pending commits."
-    cecho b "    (3) Exit"
-    cecho b "Enter your choice:"
+    line
+    info "How would you like to proceed?"
+    info "    (1) Stage and commit all changed files, then push and deploy."
+    info "    (2) Push and deploy any pending commits."
+    info "    (3) Exit"
+    info "Enter your choice: "
     read -${BASH_VERSION+e}r choice
 
      case $choice in
         1)
-            echo "Enter a commit message: "
+            info "Enter a commit message: "
             read -${BASH_VERSION+e}r msg
             git add --all
             git commit -m "$msg"
