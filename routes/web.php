@@ -23,5 +23,5 @@ Route::any('/practice/{n?}', 'PracticeController@index');
 /**
  * Example routes shown at the end of Week 6's lectures
  */
-//Route::get('/', 'TriviaController@index');
-//Route::get('/check-answer', 'TriviaController@checkAnswer');
+Route::get('/trivia', 'TriviaController@index');
+Route::get('/trivia/result', 'TriviaController@result');

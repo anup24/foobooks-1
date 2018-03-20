@@ -6,13 +6,40 @@ use Illuminate\Http\Request;
 
 class TriviaController extends Controller
 {
+    /**
+     * GET /trivia/
+     */
     public function index()
     {
-        return 'Show the question and the form where the user can enter their answer';
+        $json = file_get_contents(database_path('clues.json'));
+        $clues = json_decode($json, true);
+        $answer = array_rand($clues);
+        $clue = $clues[$answer];
+
+        return view('trivia.index')->with([
+            'clue' => $clue,
+            'answer' => $answer,
+        ]);
     }
 
-    public function checkAnswer()
+    /**
+     * GET /trivia/result
+     */
+    public function result(Request $request)
     {
-        return 'Check the answer and then redirect the user back to the index page';
+        $messages = ['required' => 'You forgot to fill out an answer!'];
+
+        $this->validate($request, [
+            'guess' => 'required'
+        ], $messages);
+
+        $guess = $request->input('guess');
+        $answer = $request->input('answer');
+        $correct = strtolower($guess) == strtolower($answer);
+
+        return view('trivia.result')->with([
+            'correct' => $correct,
+            'answer' => $answer,
+        ]);
     }
 }
