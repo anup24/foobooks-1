@@ -11,20 +11,4 @@ use View;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    /**
-     * Controller constructor.
-     */
-    public function __construct()
-    {
-        $nav = [
-            'books' => 'Books',
-            'trivia' => 'Trivia',
-            'practice' => 'Practice',
-            'about' => 'About',
-            'contact' => 'Contact',
-        ];
-
-        View::share(['nav' => $nav]);
-    }
 }
