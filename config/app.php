@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'test' => 'config',
     'supportEmail' => 'help@foobooks.dwa15.me',
 
     'nav' => [
