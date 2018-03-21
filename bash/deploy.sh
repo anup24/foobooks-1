@@ -17,7 +17,6 @@ info () {
     echo $(tput bold)$(tput setaf 4)$@ $(tput sgr 0)
 }
 
-
 # Function to handle git actions locally
 welcome () {
     echo ""
