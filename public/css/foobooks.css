@@ -7,9 +7,8 @@
 
 html {
     font-size: 62.5%; /* http://snook.ca/archives/html_and_css/font-size-with-rem */
-    color: @black;
+    color: #111;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: 1.1;
 
     /* sticky footer */
     position: relative;
@@ -80,7 +79,6 @@ nav ul li a:link {
     text-decoration: none;
     font-weight: bold;
     text-transform: uppercase;
-
 }
 
 nav ul li a:hover {
@@ -156,6 +154,10 @@ input[type='checkbox'] + label {
 
 .success {
     color: #3c763d; /* greenish */
+}
+
+.alert {
+    margin-top: 10px;
 }
 
 .details {

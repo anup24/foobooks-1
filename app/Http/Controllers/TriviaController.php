@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class TriviaController extends Controller
 {
     /**
-     * GET /trivia/
+     * GET /trivia
      */
     public function index()
     {
@@ -27,7 +27,9 @@ class TriviaController extends Controller
      */
     public function result(Request $request)
     {
-        $messages = ['required' => 'You forgot to fill out an answer!'];
+        $messages = [
+            'required' => 'You forgot to fill out an answer!'
+        ];
 
         $this->validate($request, [
             'guess' => 'required'
@@ -35,6 +37,7 @@ class TriviaController extends Controller
 
         $guess = $request->input('guess');
         $answer = $request->input('answer');
+
         $correct = strtolower($guess) == strtolower($answer);
 
         return view('trivia.result')->with([

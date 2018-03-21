@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Trivia!
+    Foobooks Trivia
 @endsection
 
 @section('content')
@@ -14,12 +14,13 @@
         <input type='hidden' name='answer' value='{{ $answer }}'>
 
         <div class='form-group'>
-            <label for='guess'>Your guess:</label>
+            <label for='guess'>Your answer:</label>
             <input type='text' name='guess' id='guess'>
+            @include('modules.error-field', ['field' => 'guess'])
         </div>
 
         <div class='form-group'>
-            <input type='submit' class='btn btn-primary btn-small' value='Check it...'>
+            <input type='submit' class='btn btn-primary btn-small' value='Check your answer...'>
         </div>
     </form>
 

@@ -5,7 +5,9 @@ return [
     'supportEmail' => 'help@foobooks.dwa15.me',
 
     'nav' => [
-        '/books' => 'Books',
+        '/books' => 'All Books',
+        '/books/create' => 'New Book',
+        '/books/search' => 'Search',
         '/trivia' => 'Trivia',
         '/practice' => 'Practice',
         '/about' => 'About',

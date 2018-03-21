@@ -20,7 +20,7 @@ class PageController extends Controller
     public function contact()
     {
         return view('pages.contact')->with([
-            'email' => Config::get('app.supportEmail')
+            'email' => config('app.supportEmail')
         ]);
     }
 }
