@@ -62,7 +62,12 @@ welcome () {
 deploy () {
     cd $docRoot;
     info "git pull origin master ---------------"
-    git pull origin master
+    haystack=$(git pull origin master)
+    needle="config"
+    if [[ "$haystack" == *"$needle"* ]]; then
+        info "Detected change in config directory, running artisan cache:clear"
+        php artisan cache:clear
+    fi
     line
     info "composer install --no-dev ------------"
     composer install --no-dev
