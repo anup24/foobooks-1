@@ -1,11 +1,10 @@
 <?php
 
 return [
-    'test' => 'config',
     'supportEmail' => 'help@foobooks.dwa15.me',
 
     'nav' => [
-        '/books' => 'All Books',
+        '/books' => 'Books',
         '/books/create' => 'New Book',
         '/books/search' => 'Search',
         '/trivia' => 'Trivia',
