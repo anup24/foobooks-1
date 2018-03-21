@@ -33,6 +33,7 @@ welcome () {
 
      case $choice in
         1)
+            git push origin master
             ssh -t $usernameServer "$docRoot/bash/deploy.sh"
             ;;
         2)
