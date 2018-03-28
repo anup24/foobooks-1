@@ -7,14 +7,21 @@ use Config;
 use App;
 use Debugbar;
 use IanLChapman\PigLatinTranslator\Parser;
-use Carbon\Carbon;
 
 class PracticeController extends Controller
 {
 
+    /**
+     * Purposefully creating an error to demonstrate debug settings on prod
+     */
+    public function practice6()
+    {
+        return view('xyz');
+    }
 
-
-
+    /*
+     *
+     */
     public function practice5()
     {
         $translator = new Parser();
@@ -22,6 +29,9 @@ class PracticeController extends Controller
         dump($translation);
     }
 
+    /*
+     *
+     */
     public function practice4()
     {
         $data = ['foo' => 'bar'];
