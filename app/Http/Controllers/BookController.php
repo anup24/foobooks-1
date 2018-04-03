@@ -98,15 +98,17 @@ class BookController extends Controller
             'purchase_url' => 'required|url',
         ]);
 
-        # EXIT.... Redirect
+        # Extract data from the request
+        $title = $request->input('title');
 
         # Eventually, code will go here to take the form data
         # and create a new book in the database...
 
-        $title = $request->input('title');
-
+        # Logging code just as proof of concept that this method is being invoked
         Log::info('Add the book ' . $title);
 
+        # Send the user back to the page to add a book; include the title as part of the redirect
+        # so we can display a confirmation message on that page
         return redirect('/books/create')->with([
             'title' => $title
         ]);
