@@ -76,9 +76,13 @@ class BookController extends Controller
     /**
      * GET /books/create
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('books.create');
+        $title = $request->session()->get('title');
+
+        return view('books.create')->with([
+            'title' => $title,
+        ]);
     }
 
     /**
@@ -99,8 +103,12 @@ class BookController extends Controller
         # Eventually, code will go here to take the form data
         # and create a new book in the database...
 
-        Log::info('Add the book ' . $request->input('title'));
+        $title = $request->input('title');
 
-        return redirect('/books');
+        Log::info('Add the book ' . $title);
+
+        return redirect('/books/create')->with([
+            'title' => $title
+        ]);
     }
 }
