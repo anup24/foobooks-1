@@ -47,7 +47,7 @@ Route::get('/debug', function () {
     debugging, comment it back out so you don't accidentally leave it
     running on your production server, making your credentials public.
     */
-    $debug['MySQL connection config'] = config('database.connections.mysql');
+    #$debug['MySQL connection config'] = config('database.connections.mysql');
 
     try {
         $databases = DB::select('SHOW DATABASES;');
