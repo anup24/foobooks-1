@@ -17,8 +17,14 @@ Route::post('/books', 'BookController@store');
 
 Route::get('/books/search', 'BookController@search');
 
-Route::get('/books/{title}', 'BookController@show');
+Route::get('/books/{id}', 'BookController@show');
 
+
+# Show the form to edit a specific book
+Route::get('/books/{id}/edit', 'BookController@edit');
+
+# Process the form to edit a specific book
+Route::put('/books/{id}', 'BookController@update');
 
 /**
  * Practice

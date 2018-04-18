@@ -6,10 +6,6 @@
 
 @section('content')
 
-    @if(isset($title))
-        <div class='alert alert-success'>You added the book {{ $title }}. You can add another below.</div>
-    @endif
-
     <h1>Add a new book</h1>
 
     <form method='POST' action='/books'>
@@ -20,6 +16,10 @@
         <label for='title'>* Title</label>
         <input type='text' name='title' id='title' value='{{ old('title', 'Green Eggs & Ham') }}'>
         @include('modules.error-field', ['field' => 'title'])
+
+        <label for='title'>* Author</label>
+        <input type='text' name='author' id='author' value='{{ old('author', 'Dr. Seuss') }}'>
+        @include('modules.error-field', ['field' => 'author'])
 
         <label for='published_year'>* Published Year (YYYY)</label>
         <input type='text' maxlength='4' name='published_year' id='published_year' value='{{ old('published_year', 1960) }}'>
