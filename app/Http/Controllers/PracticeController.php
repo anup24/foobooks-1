@@ -8,11 +8,157 @@ use App;
 use Debugbar;
 use IanLChapman\PigLatinTranslator\Parser;
 use App\Book;
+use App\Utilities\Practice;
 
 class PracticeController extends Controller
 {
+
     /**
-     *
+     * Examples of collection magic
+     */
+    public function practice19()
+    {
+        $books = Book::all();
+
+        # String
+        # echo $books;
+
+        # Array
+        # foreach($books as $book) {
+        #     dump($book['title']);
+        # }
+
+        # Object
+        foreach($books as $book) {
+            dump($book->title);
+        }
+    }
+
+
+
+    /**
+     * Examples shown in Week 12, Part 1 when discussing Collections
+     */
+    public function practice18()
+    {
+        #$results = Book::find(1);
+        #$results = Book::orderBy('title')->first();
+        #$results = Book::all();
+        #$results = Book::orderBy('title')->get();
+        #$results = Book::where('author', 'F. Scott Fitzgerald')->get();
+        #$results = Book::where('author', 'Virginia Wolf')->get();
+        #$results = Book::limit(1)->get();
+    }
+
+
+    /**
+     * [BONUS]
+     * Find any books by the author “J.K. Rowling” and update the author name to be “JK Rowling”.
+     */
+    public function practice17()
+    {
+        Book::dump();
+
+        # Approach # 1
+        # Get all the books that match the criteria
+        $books = Book::where('author', '=', 'J.K. Rowling')->get();
+
+        $matches = $books->count();
+        dump('Found ' . $matches . ' ' . str_plural('book', $matches) . ' that match this search criteria');
+
+        if ($matches > 0) {
+            # Loop through each book and update them
+            foreach ($books as $book) {
+                $book->author = 'JK Rowling';
+                $book->save();
+                # Underlying SQL: update `books` set `updated_at` = '20XX-XX-XX XX:XX:XX', `author` = 'JK Rowling' where `id` = '4'
+            }
+        }
+
+        # Approach #2
+        # More ideal - Requires 1 query instead of 3
+        # Book::where('author', '=', 'J.K. Rowling')->update(['author' => 'JK Rowling']);
+
+        Book::dump();
+
+        Practice::resetDatabase();
+    }
+
+    /**
+     * [5 of 5] Solution to query practice from Week 11 assignment
+     * Remove all books authored by “J.K. Rowling”
+     */
+    public function practice16()
+    {
+        # Show books before we do the delete
+        Book::dump();
+
+        # Do the delete
+        Book::where('author', 'LIKE', 'J.K. Rowling')->delete();
+        dump('Deleted all books where author like J.K. Rowling');
+
+        # Show books after the delete
+        Book::dump();
+
+        Practice::resetDatabase();
+
+        # Underlying SQL: delete from `books` where `author` LIKE 'J.K. Rowling'
+    }
+
+    /**
+     * [4 of 5] Solution to query practice from Week 11 assignment
+     * Retrieve all the books in descending order according to published date
+     */
+    public function practice15()
+    {
+        $books = Book::orderByDesc('published')->get();
+        Book::dump($books);
+
+        # Underlying SQL: select * from `books` order by `published` desc
+    }
+
+    /**
+     * [3 of 5] Solution to query practice from Week 11 assignment
+     * Retrieve all the books in alphabetical order by title
+     */
+    public function practice14()
+    {
+        $books = Book::orderBy('title', 'asc')->get();
+        Book::dump($books);
+
+        # Underlying SQL: select * from `books` order by `title` asc
+    }
+
+    /**
+     * [2 of 5] Solution to query practice from Week 11 assignment
+     * Retrieve all the books published after 1950.
+     */
+    public function practice13()
+    {
+        $books = Book::where('published_year', '>', 1950)->get();
+        Book::dump($books);
+
+        # Underlying SQL: select * from `books` where `published` > '1950'
+    }
+
+    /**
+     * [1 of 5] Solution to query practice from Week 11 assignment
+     * Retrieve the last 2 books that were added to the books table.
+     */
+    public function practice12()
+    {
+        $books = Book::orderBy('id', 'desc')->limit(2)->get();
+
+        # Alternative approach using the `latest` convenience method:
+        # $books = Book::latest()->limit(2)->get();
+
+        Book::dump($books);
+
+        # Underlying SQL: select * from `books` order by `id` desc limit 2
+    }
+
+    /**
+     * Example of Deleting a row in a database table
      */
     public function practice11()
     {
@@ -25,12 +171,10 @@ class PracticeController extends Controller
             $book->delete();
             dump('Deletion complete; check the database to see if it worked...');
         }
-
     }
 
-
     /**
-     *
+     * Example of Updating a row in a database table
      */
     public function practice10()
     {
@@ -51,6 +195,10 @@ class PracticeController extends Controller
         }
     }
 
+    /**
+     * Another example of Reading multiple rows from a database table
+     * This time we use the Book model as a facade, rather than instantiating an object from it
+     */
     public function practice9()
     {
         $books = Book::where('title', 'LIKE', '%Harry Potter%')->get();
@@ -64,6 +212,9 @@ class PracticeController extends Controller
         }
     }
 
+    /*
+     * Example of Reading multiple rows from a database table
+     */
     public function practice8()
     {
         $book = new Book();
@@ -79,7 +230,7 @@ class PracticeController extends Controller
     }
 
     /**
-     *
+     * Example of Creating a new row in a database table
      */
     public function practice7()
     {
@@ -94,7 +245,6 @@ class PracticeController extends Controller
         dump($book);
     }
 
-
     /**
      * Purposefully creating an error to demonstrate debug settings on prod
      */
@@ -104,7 +254,7 @@ class PracticeController extends Controller
     }
 
     /*
-     *
+     * Demonstrating the PigLatin package
      */
     public function practice5()
     {
@@ -114,13 +264,13 @@ class PracticeController extends Controller
     }
 
     /*
-     *
+     * Demonstrating features of the Debugbar
      */
     public function practice4()
     {
         $data = ['foo' => 'bar'];
         Debugbar::info($data);
-        Debugbar::info('Current environment: '.App::environment());
+        Debugbar::info('Current environment: ' . App::environment());
         Debugbar::error('Error!');
         Debugbar::warning('Watch out…');
         Debugbar::addMessage('Another message', 'mylabel');
@@ -129,7 +279,7 @@ class PracticeController extends Controller
     }
 
     /**
-     *
+     * Demonstrating getting values from the config
      */
     public function practice3()
     {
@@ -139,7 +289,7 @@ class PracticeController extends Controller
     }
 
     /**
-     *
+     * Demonstrating the `dump` helper method
      */
     public function practice2()
     {
@@ -147,7 +297,7 @@ class PracticeController extends Controller
     }
 
     /**
-     *
+     * Demonstrating the first practice example
      */
     public function practice1()
     {
@@ -175,10 +325,12 @@ class PracticeController extends Controller
                     $methods[] = $method;
                 }
             }
+
             return view('practice')->with(['methods' => $methods]);
         } # Otherwise, load the requested method
         else {
             $method = 'practice' . $n;
+
             return (method_exists($this, $method)) ? $this->$method() : abort(404);
         }
     }
