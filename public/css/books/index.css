@@ -1,7 +1,6 @@
-#books {
-    margin-bottom: 20px;
-}
-
+/*----------------------------------------------------
+New Books aside
+-----------------------------------------------------*/
 #newBooks {
     background-color: Azure;
     padding: 5px;
@@ -19,7 +18,14 @@
     margin-top: 0;
 }
 
-.book {
+
+/*----------------------------------------------------
+Listing of all books
+-----------------------------------------------------*/
+a.book {
+    display: block;
+    text-decoration: none;
+    color: black;
     padding: 10px;
     width: 100%;
     margin-bottom: 20px;
@@ -27,24 +33,18 @@
     border: 1px solid #eee;
 }
 
-.book h2 {
+a.book:hover {
+    border: 1px solid black;
+}
+
+a.book h2 {
     font-size: 1.3em;
     margin: 4px 0 4px 0;
     font-style: italic;
     text-align: left;
 }
 
-a.bookAction:link {
-    padding: 5px;
-    font-size: 2.0rem;
-}
-
-a.bookAction:hover {
-    padding: 5px;
-    color: #18bc9c; /* flatly teel */
-}
-
-.cover {
+a.book .cover {
     float: left;
     width: 100px;
     height: 137px;
@@ -52,3 +52,4 @@ a.bookAction:hover {
     border: 1px solid black;
     margin-right: 10px;
 }
+

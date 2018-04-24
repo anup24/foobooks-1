@@ -24,15 +24,11 @@
     <h1>All Books</h1>
     @if(count($books) > 0)
         @foreach($books as $book)
-            <div class='book cf'>
+            <a class='book cf' href='/books/{{ $book->id }}'>
                 <img src='{{ $book->cover_url }}' class='cover' alt='Cover image for {{ $book->title }}'>
                 <h2>{{ $book->title }}</h2>
-                <p>By {{ $book->author }}</p>
-                <p>Published in {{ $book->published_year }}</p>
-
-                <a href='/books/{{ $book->id }}'>View</a> |
-                <a href='{{ $book->purchase_url }}'>Purchase</a>
-            </div>
+                <p>{{ $book->author }}</p>
+            </a>
         @endforeach
     @endif
 

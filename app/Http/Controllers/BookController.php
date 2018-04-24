@@ -192,4 +192,37 @@ class BookController extends Controller
             'alert' => 'Your changes were saved'
         ]);
     }
+
+    /*
+    * Asks user to confirm they actually want to delete the book
+    * GET /books/{id}/delete
+    */
+    public function delete($id)
+    {
+        $book = Book::find($id);
+
+        if (!$book) {
+            return redirect('/books')->with('alert', 'Book not found');
+        }
+
+        return view('books.delete')->with([
+            'book' => $book,
+        ]);
+    }
+
+
+    /*
+    * Actually deletes the book
+    * DELETE /books/{id}/delete
+    */
+    public function destroy($id)
+    {
+        $book = Book::find($id);
+        $book->delete();
+
+        return redirect('/books')->with([
+            'alert' => '“'.$book->title.'” was removed.'
+        ]);
+    }
+
 }
