@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Log;
 use App\Book;
+use App\Author;
+use App\Tag;
 
 class BookController extends Controller
 {
@@ -104,7 +106,12 @@ class BookController extends Controller
      */
     public function create(Request $request)
     {
-        return view('books.create');
+        return view('books.create')->with([
+            'authorsForDropdown' => Author::getForDropdown(),
+            'tagsForCheckboxes' => Tag::getForCheckboxes(),
+            'book' => new Book(),
+            'tags' => [],
+        ]);
     }
 
     /**
@@ -118,16 +125,19 @@ class BookController extends Controller
             'published_year' => 'required|digits:4|numeric',
             'cover_url' => 'required|url',
             'purchase_url' => 'required|url',
+            'author_id' => 'required'
         ]);
 
         # Save the book to the database
         $book = new Book();
         $book->title = $request->title;
-        $book->author = $request->author;
+        $book->author_id = $request->author_id;
         $book->published_year = $request->published_year;
         $book->cover_url = $request->cover_url;
         $book->purchase_url = $request->purchase_url;
         $book->save();
+
+        $book->tags()->sync($request->input('tags'));
 
         # Logging code just as proof of concept that this method is being invoked
         # Log::info('Add the book ' . $book->title);
@@ -157,6 +167,9 @@ class BookController extends Controller
 
         # Show the book edit form
         return view('books.edit')->with([
+            'authorsForDropdown' => Author::getForDropdown(),
+            'tagsForCheckboxes' => Tag::getForCheckboxes(),
+            'tags' => $book->tags()->pluck('tags.id')->toArray(),
             'book' => $book
         ]);
     }
@@ -172,6 +185,7 @@ class BookController extends Controller
             'published_year' => 'required|digits:4|numeric',
             'cover_url' => 'required|url',
             'purchase_url' => 'required|url',
+            'author_id' => 'required'
         ]);
 
         # Fetch the book we want to update
@@ -179,10 +193,12 @@ class BookController extends Controller
 
         # Update data
         $book->title = $request->title;
-        $book->author = $request->author;
         $book->published_year = $request->published_year;
+        $book->author_id = $request->author_id;
         $book->cover_url = $request->cover_url;
         $book->purchase_url = $request->purchase_url;
+
+        $book->tags()->sync($request->input('tags'));
 
         # Save edits
         $book->save();
@@ -210,7 +226,6 @@ class BookController extends Controller
         ]);
     }
 
-
     /*
     * Actually deletes the book
     * DELETE /books/{id}/delete
@@ -218,10 +233,13 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::find($id);
+
+        $book->tags()->detach();
+
         $book->delete();
 
         return redirect('/books')->with([
-            'alert' => '“'.$book->title.'” was removed.'
+            'alert' => '“' . $book->title . '” was removed.'
         ]);
     }
 

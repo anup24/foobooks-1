@@ -9,9 +9,78 @@ use Debugbar;
 use IanLChapman\PigLatinTranslator\Parser;
 use App\Book;
 use App\Utilities\Practice;
+use App\Author;
 
 class PracticeController extends Controller
 {
+
+    /**
+     *
+     */
+    public function practice24()
+    {
+        $books = Book::with('tags')->orderBy('title')->get();
+
+        foreach ($books as $book) {
+            foreach ($book->tags as $tag) {
+                dump($book->title . ' is tagged with ' . $tag->name);
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public function practice23()
+    {
+        $book = Book::where('title', '=', 'The Bell Jar')->first();
+
+        #dump($book->tags);
+
+        foreach ($book->tags as $tag) {
+            dump($tag->name);
+        }
+    }
+
+    /**
+     *
+     */
+    public function practice22()
+    {
+        $books = Book::with('author')->get();
+
+        foreach ($books as $book) {
+            dump($book->author->first_name . ' ' . $book->author->last_name . ' is the author of ' . $book->title);
+        }
+    }
+
+    /**
+     *
+     */
+    public function practice21()
+    {
+        $book = Book::latest()->first();
+
+        dump($book->author->first_name . ' ' . $book->author->last_name . ' is the author of ' . $book->title);
+    }
+
+    /**
+     *
+     */
+    public function practice20()
+    {
+        $author = Author::where('first_name', '=', 'J.K.')->first();
+
+        $book = new Book;
+        $book->title = "Fantastic Beasts and Where to Find Them";
+        $book->published_year = 2017;
+        $book->cover_url = 'http://prodimage.images-bn.com/pimages/9781338132311_p0_v2_s192x300.jpg';
+        $book->purchase_url = 'http://www.barnesandnoble.com/w/fantastic-beasts-and-where-to-find-them-j-k-rowling/1004478855';
+        $book->author()->associate($author); # <--- Associate the author with this book
+        #$book->author_id = $author->id;
+        $book->save();
+        dump($book->toArray());
+    }
 
     /**
      * Examples of collection magic
@@ -29,12 +98,10 @@ class PracticeController extends Controller
         # }
 
         # Object
-        foreach($books as $book) {
+        foreach ($books as $book) {
             dump($book->title);
         }
     }
-
-
 
     /**
      * Examples shown in Week 12, Part 1 when discussing Collections
@@ -49,7 +116,6 @@ class PracticeController extends Controller
         #$results = Book::where('author', 'Virginia Wolf')->get();
         #$results = Book::limit(1)->get();
     }
-
 
     /**
      * [BONUS]
@@ -101,7 +167,6 @@ class PracticeController extends Controller
         Book::dump();
 
         Practice::resetDatabase();
-
         # Underlying SQL: delete from `books` where `author` LIKE 'J.K. Rowling'
     }
 
@@ -113,7 +178,6 @@ class PracticeController extends Controller
     {
         $books = Book::orderByDesc('published')->get();
         Book::dump($books);
-
         # Underlying SQL: select * from `books` order by `published` desc
     }
 
@@ -125,7 +189,6 @@ class PracticeController extends Controller
     {
         $books = Book::orderBy('title', 'asc')->get();
         Book::dump($books);
-
         # Underlying SQL: select * from `books` order by `title` asc
     }
 
@@ -137,7 +200,6 @@ class PracticeController extends Controller
     {
         $books = Book::where('published_year', '>', 1950)->get();
         Book::dump($books);
-
         # Underlying SQL: select * from `books` where `published` > '1950'
     }
 
@@ -153,7 +215,6 @@ class PracticeController extends Controller
         # $books = Book::latest()->limit(2)->get();
 
         Book::dump($books);
-
         # Underlying SQL: select * from `books` order by `id` desc limit 2
     }
 

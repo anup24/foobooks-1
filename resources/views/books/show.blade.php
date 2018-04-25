@@ -14,7 +14,7 @@
     <div class='book cf'>
         <img src='{{ $book->cover_url }}' class='cover' alt='Cover image for {{ $book->title }}'>
         <h2>{{ $book->title }}</h2>
-        <p>By {{ $book->author }}</p>
+        <p>By {{ $book->author->getFullName() }}</p>
         <p>Published in {{ $book->published_year }}</p>
 
         <ul class='bookActions'>

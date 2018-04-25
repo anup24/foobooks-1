@@ -1,0 +1,11 @@
+.tags {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tags label {
+    font-weight: normal;
+    margin: 0;
+    text-transform: none;
+}

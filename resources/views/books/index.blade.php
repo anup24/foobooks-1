@@ -27,7 +27,7 @@
             <a class='book cf' href='/books/{{ $book->id }}'>
                 <img src='{{ $book->cover_url }}' class='cover' alt='Cover image for {{ $book->title }}'>
                 <h2>{{ $book->title }}</h2>
-                <p>{{ $book->author }}</p>
+                <p>{{ $book->author->getFullName()  }}</p>
             </a>
         @endforeach
     @endif
