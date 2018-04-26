@@ -120,13 +120,18 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        # Custom validation messages
+        $messages = [
+            'author_id.required' => 'The author field is required.',
+        ];
+
         $this->validate($request, [
             'title' => 'required',
             'published_year' => 'required|digits:4|numeric',
             'cover_url' => 'required|url',
             'purchase_url' => 'required|url',
             'author_id' => 'required'
-        ]);
+        ], $messages);
 
         # Save the book to the database
         $book = new Book();
@@ -155,8 +160,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        # Find the book the visitor is requesting to edit
-        $book = Book::find($id);
+        # Get this book and eager load its tags
+        $book = Book::with('tags')->find($id);
 
         # Handle the case where we can't find the given book
         if (!$book) {
@@ -180,13 +185,18 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+        # Custom validation messages
+        $messages = [
+            'author_id.required' => 'The author field is required.',
+        ];
+
         $this->validate($request, [
             'title' => 'required',
             'published_year' => 'required|digits:4|numeric',
             'cover_url' => 'required|url',
             'purchase_url' => 'required|url',
             'author_id' => 'required'
-        ]);
+        ], $messages);
 
         # Fetch the book we want to update
         $book = Book::find($id);
@@ -234,6 +244,7 @@ class BookController extends Controller
     {
         $book = Book::find($id);
 
+        # Before we delete the book we have to delete any tag associations
         $book->tags()->detach();
 
         $book->delete();
@@ -242,5 +253,4 @@ class BookController extends Controller
             'alert' => '“' . $book->title . '” was removed.'
         ]);
     }
-
 }

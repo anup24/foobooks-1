@@ -4,14 +4,14 @@
 <input type='text' name='title' id='title' value='{{ old('title', $book->title) }}'>
 @include('modules.error-field', ['field' => 'title'])
 
-<label for='title'>* Author</label>
-<select name='author_id'>
+<label for='author_id'>* Author</label>
+<select name='author_id' id='author_id'>
     <option value=''>Choose one...</option>
     @foreach($authorsForDropdown as $id => $authorName)
         <option value='{{ $id }}' {{ ($book->author_id == $id) ? 'selected' : '' }}>{{ $authorName }}</option>
     @endforeach
 </select>
-@include('modules.error-field', ['field' => 'author'])
+@include('modules.error-field', ['field' => 'author_id'])
 
 <label for='published_year'>* Published Year (YYYY)</label>
 <input type='text' maxlength='4' name='published_year' id='published_year' value='{{ old('published_year', $book->published_year) }}'>

@@ -8,7 +8,7 @@ class Author extends Model
 {
 
     /*
-     * Relationship method
+     * Define the one to many relationship with authors
      */
     public function books()
     {
@@ -18,7 +18,7 @@ class Author extends Model
     }
 
     /**
-     * Return an array of author id => author name
+     * Return an array of authors where key = author id and value = authors name
      */
     public static function getForDropdown()
     {
