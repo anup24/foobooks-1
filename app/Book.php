@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+    /**
+     * Relationship method
+     */
     public function author()
     {
         # Book belongs to Author
@@ -13,10 +16,21 @@ class Book extends Model
         return $this->belongsTo('App\Author');
     }
 
+    /**
+     * Relationship method
+     */
     public function tags()
     {
         # With timestamps() will ensure the pivot table has its created_at/updated_at fields automatically maintained
         return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    /**
+     * Relationship method
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 
     /*

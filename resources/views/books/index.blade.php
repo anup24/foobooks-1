@@ -30,6 +30,10 @@
                 <p>{{ $book->author->getFullName()  }}</p>
             </a>
         @endforeach
+    @else
+        <p>
+        You don't have any books yet. <a href='/books/create'>Would you like to add one?</a>
+        </p>
     @endif
 
 @endsection
