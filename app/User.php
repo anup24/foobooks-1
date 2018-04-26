@@ -26,12 +26,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /**
-     * Relationship method
-     */
-    public function books()
-    {
-        return $this->hasMany('App\Book');
-    }
 }

@@ -3,16 +3,7 @@
 return [
     'supportEmail' => 'help@foobooks.dwa15.me',
 
-    # Guest navigation links
     'nav' => [
-        '/register' => 'Register',
-        '/login' => 'Login',
-        '/about' => 'About',
-        '/contact' => 'Contact',
-    ],
-
-    # Logged-in user navigation links
-    'nav1' => [
         '/books' => 'Books',
         '/books/create' => 'New Book',
         '/books/search' => 'Search',
@@ -180,7 +171,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\ViewServiceProvider::class, # <-- NEW
     ],
 
     /*

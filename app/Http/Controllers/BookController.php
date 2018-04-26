@@ -13,20 +13,14 @@ class BookController extends Controller
     /*
      * GET /books
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
+        $books = Book::orderBy('title')->get();
 
-        # Note: We're getting the user from the request, but you can also get it like this:
-        //$user = Auth::user();
+        # Query the database to get the last 3 books added
+        # $newBooks = Book::latest()->limit(3)->get();
 
-        # Approach 1)
-        //$books = Book::where('user_id', '=', $user->id)->orderBy('title')->get();
-
-        # Approach 2) Take advantage of Model relationships
-        $books = $user->books()->orderBy('title')->get();
-
-        # Query the existing Collection to get the last 3 books added
+        # [Better] Query the existing Collection to get the last 3 books added
         $newBooks = $books->sortByDesc('created_at')->take(3);
 
         return view('books.index')->with([
@@ -146,7 +140,6 @@ class BookController extends Controller
         $book->published_year = $request->published_year;
         $book->cover_url = $request->cover_url;
         $book->purchase_url = $request->purchase_url;
-        $book->user_id = $request->user()->id; # <--- NEW LINE
         $book->save();
 
         $book->tags()->sync($request->input('tags'));
