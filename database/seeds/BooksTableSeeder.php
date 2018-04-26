@@ -27,6 +27,7 @@ class BooksTableSeeder extends Seeder
         foreach ($books as $key => $bookData) {
 
             # First, figure out the id of the author we want to associate with this book
+
             # Extract just the last name from the book data...
             # F. Scott Fitzgerald => ['F.', 'Scott', 'Fitzgerald'] => 'Fitzgerald'
             $name = explode(' ', $bookData[1]);
@@ -44,7 +45,6 @@ class BooksTableSeeder extends Seeder
             $book->published_year = $bookData[2];
             $book->cover_url = $bookData[3];
             $book->purchase_url = $bookData[4];
-            $book->user_id = 1; # <--- NEW LINE
 
             $book->save();
             $count--;
